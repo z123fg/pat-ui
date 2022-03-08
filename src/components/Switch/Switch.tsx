@@ -32,7 +32,7 @@ const Switch: FC<ISwitchProps> = ({
     useEffect(() => {
         setCheckedState(checked);
     }, [checked]);
-    
+
     const handleClick = (e: React.MouseEvent) => {
         if (disabled) return;
 
@@ -45,17 +45,23 @@ const Switch: FC<ISwitchProps> = ({
             style={generateSwitchContainerStyles(size)}
         >
             <div
-                className='track'
+                className='track1'
+                data-testid='switch-track'
+
                 style={generateTrackStyles(size, disabled, color, checkedState)}
             >
                 <div
                     className='ripple_container'
+                    data-testid="switch-ripple"
                     style={
-                        generateRippleContainerStyles(checkedState, size)
+                        generateRippleContainerStyles(checkedState, size,color)
+
                     }
                 >
                     <div
                         onClick={handleClick}
+                        data-testid='switch-knob'
+
                         className='nob'
                         style={generateNobStyles(size, color, checkedState)}
                     ></div>
@@ -102,7 +108,9 @@ const generateTrackStyles = (size: SwitchSizeType, disabled: boolean, color:Swit
 
 const generateRippleContainerStyles = (
     checkedState: boolean,
-    size: SwitchSizeType
+    size: SwitchSizeType,
+    color:SwitchColorType
+
 ) => {
     const leftPostion = size === SwitchSizeType.Medium ? '7px' : '5px';
     const rightPosition = size === SwitchSizeType.Medium ? '27px' : '21px';
@@ -111,7 +119,8 @@ const generateRippleContainerStyles = (
         height: size === SwitchSizeType.Medium ? '38px' : '24px',
         width: size === SwitchSizeType.Medium ? '38px' : '24px',
         borderRadius: '50%',
-        background: 'rgba(63, 81, 181, 0.08)',
+        background: !checkedState?'rgba(0, 0, 0, 0.04)': color===SwitchColorType.Primary?'rgba(63, 81, 181, 0.08)':'rgba(245, 0, 87, 0.08)',
+
         transform: 'translate(-50%, -50%)',
         top: '50%',
         transition:

@@ -1,7 +1,8 @@
-import React from 'react';
+import React from 'react'
+import Switch, { SwitchColorType, SwitchSizeType } from './components/Switch/Switch';
+
 import ReactDOM from 'react-dom';
 
-import Switch, { SwitchSizeType } from './components/Switch/Switch';
 export { default as Button } from './components/Button';
 export { default as Input } from './components/Input';
 export { default as Icon } from './components/Icon';
@@ -11,17 +12,17 @@ export { default as Dropdown } from './components/Dropdown';
 export { default as Progress } from './components/Progress';
 
 
-function App() {
-    return (
-      <div className='App' style={{margin:'50px'}}>
-        <Switch label={'Hello World'} size={SwitchSizeType.Small}/>
-      </div>
-    );
-  }
-  ReactDOM.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-    document.getElementById('root')
-  );
-  
+const App = () => {
+  return (
+    <div style={{margin:'100px'}}>
+      <Switch size={SwitchSizeType.Medium} color={SwitchColorType.Secondary}/>
+    </div>
+  )
+}
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
