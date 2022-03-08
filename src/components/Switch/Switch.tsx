@@ -47,6 +47,7 @@ const Switch: FC<ISwitchProps> = ({
             <div
                 className='track1'
                 data-testid='switch-track'
+
                 style={generateTrackStyles(size, disabled, color, checkedState)}
             >
                 <div
@@ -54,11 +55,13 @@ const Switch: FC<ISwitchProps> = ({
                     data-testid="switch-ripple"
                     style={
                         generateRippleContainerStyles(checkedState, size,color)
+
                     }
                 >
                     <div
                         onClick={handleClick}
                         data-testid='switch-knob'
+
                         className='nob'
                         style={generateNobStyles(size, color, checkedState)}
                     ></div>
@@ -107,6 +110,7 @@ const generateRippleContainerStyles = (
     checkedState: boolean,
     size: SwitchSizeType,
     color:SwitchColorType
+
 ) => {
     const leftPostion = size === SwitchSizeType.Medium ? '7px' : '5px';
     const rightPosition = size === SwitchSizeType.Medium ? '27px' : '21px';
@@ -116,6 +120,7 @@ const generateRippleContainerStyles = (
         width: size === SwitchSizeType.Medium ? '38px' : '24px',
         borderRadius: '50%',
         background: !checkedState?'rgba(0, 0, 0, 0.04)': color===SwitchColorType.Primary?'rgba(63, 81, 181, 0.08)':'rgba(245, 0, 87, 0.08)',
+
         transform: 'translate(-50%, -50%)',
         top: '50%',
         transition:
