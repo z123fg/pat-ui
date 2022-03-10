@@ -11,7 +11,9 @@ import { IDropdownOptionProps } from './DropdownOption';
 
 export interface IDropdownProps {
   /** children must be React Element */
-  children?: | ReactElement<IDropdownOptionProps> | ReactElement<IDropdownOptionProps>[];
+  children?:
+    | ReactElement<IDropdownOptionProps>
+    | ReactElement<IDropdownOptionProps>[];
   /** set customized css class */
   className?: string;
   /** set dropDown to be disabled */

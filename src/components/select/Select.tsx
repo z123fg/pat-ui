@@ -1,0 +1,112 @@
+import React, {
+  Children,
+  cloneElement,
+  CSSProperties,
+  FC,
+  ReactElement,
+  ReactNode,
+  useState,
+} from 'react';
+import { ISelectOptionProps } from './SelectOption';
+
+export type selectColor = 'primary' | 'secondary' | 'error';
+
+
+export interface ISelectProps {
+  /** children must be React Element */
+  children?:
+    | ReactElement<ISelectOptionProps>
+    | ReactElement<ISelectOptionProps>[];
+  /** set customized css class */
+  className?: string;
+  /** set select to be disabled */
+  disabled?: boolean;
+  /** set customized css style */
+  style?: CSSProperties;
+  /** set default string on active option */
+  placeholder?: string;
+  /** a callback to provide current value */
+  onChange?: (val: any) => void;
+    /** set the color of select */
+    color?: selectColor;
+}
+
+//A Select allows user to select from multiple options.
+
+const Select: FC<ISelectProps> = (props) => {
+  const { children, className, style, placeholder, onChange, disabled } = props;
+
+  const [isOptionListOpen, setisOptionListOpen] = useState(false);
+
+  //check if there is an active option
+  let activeOption: ReactNode = undefined;
+
+  if (children) {
+    Children.forEach(children, (child: ReactElement<ISelectOptionProps>) => {
+      if (child.props.active) {
+        activeOption = child.props.children;
+      }
+    });
+  }
+
+  //if no active child is set, then use placeholder
+  const [currentActiveOption, setCurrentActiveOption] = useState(
+    activeOption ? activeOption : (placeholder as ReactNode)
+  );
+
+  const toggleOptionList = () => {
+    setisOptionListOpen(!isOptionListOpen);
+  };
+
+  const closeOptionList = () => {
+    if (isOptionListOpen) {
+      setisOptionListOpen(false);
+    }
+  };
+
+  const setSelected = (val: any, innerChild: ReactNode) => {
+    //trigger callback function
+    if (onChange) {
+      onChange(val);
+    }
+    setCurrentActiveOption(innerChild);
+  };
+
+  return (
+    <div
+      className={className ? `select__wrapper ${className}` : 'select__wrapper'}
+      style={style}
+    >
+      <div
+        className={isOptionListOpen ? 'select open' : 'select'}
+        onClick={(e) => (disabled ? e.preventDefault() : toggleOptionList())}
+        onBlur={() => closeOptionList()}
+        tabIndex={0}
+      >
+        <div
+          className={
+            disabled
+              ? 'select__active_option disabled'
+              : 'select__active_option'
+          }
+        >
+          <div className="select__active_option__inner">
+            {currentActiveOption}
+          </div>
+          <div className="select__arrow">
+          </div>
+        </div>
+
+        <div className="select__options">
+          {children
+            ? Children.map(children, (child: ReactElement) =>
+                cloneElement(child, { setSelected })
+              )
+            : children}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Select;
