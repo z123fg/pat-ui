@@ -25,7 +25,7 @@
   align-items: center;
   justify-content: space-between;
 
-  @include dselect-border-style($border-width, rgba(34, 36, 38, 0.15));
+  @include select-border-style($border-width, rgba(34, 36, 38, 0.15));
   border-radius: $select-border-radius;
 
   padding: $select-padding-y $select-padding-x;
