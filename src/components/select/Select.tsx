@@ -11,7 +11,7 @@ import { ISelectOptionProps } from './SelectOption';
 
 export type selectColor = 'primary' | 'secondary' | 'error';
 
-
+// export type selectType = 'standard' | '' 
 export interface ISelectProps {
   /** children must be React Element */
   children?:
@@ -27,14 +27,14 @@ export interface ISelectProps {
   placeholder?: string;
   /** a callback to provide current value */
   onChange?: (val: any) => void;
-    /** set the color of select */
-    color?: selectColor;
+  /** set the color of select */
+  color?: selectColor;
 }
 
 //A Select allows user to select from multiple options.
 
 const Select: FC<ISelectProps> = (props) => {
-  const { children, className, style, placeholder, onChange, disabled } = props;
+  const { children, className, style, placeholder, onChange, disabled, color } = props;
 
   const [isOptionListOpen, setisOptionListOpen] = useState(false);
 
@@ -72,11 +72,34 @@ const Select: FC<ISelectProps> = (props) => {
     setCurrentActiveOption(innerChild);
   };
 
+  const getColorClass = (color: string | undefined) => {
+    switch (color) {
+      case 'primary':
+        return 'select__active_option--primary';
+      case 'secondary':
+        return 'select__active_option--secondary';
+      case 'error':
+        return 'select__active_option--error';
+      default:
+        return 'select__active_option';
+    }
+  };
+
+  //problem: after selected, label hide??
+  const getLabelClass = (isOptionListOpen: boolean) => {
+    if (isOptionListOpen ) {
+      return 'label__ontop';
+    } else {
+      return 'label__hidden';
+    }
+  }
+
   return (
     <div
       className={className ? `select__wrapper ${className}` : 'select__wrapper'}
       style={style}
     >
+      <span className={`${getLabelClass(isOptionListOpen)}`}>{placeholder}</span>
       <div
         className={isOptionListOpen ? 'select open' : 'select'}
         onClick={(e) => (disabled ? e.preventDefault() : toggleOptionList())}
@@ -84,17 +107,18 @@ const Select: FC<ISelectProps> = (props) => {
         tabIndex={0}
       >
         <div
-          className={
-            disabled
-              ? 'select__active_option disabled'
-              : 'select__active_option'
-          }
+          className={`
+            ${
+              disabled
+                ? 'select__active_option disabled'
+                : 'select__active_option'
+            } ${getColorClass(color)}
+          `}
         >
           <div className="select__active_option__inner">
-            {currentActiveOption}
+            {isOptionListOpen ? null : currentActiveOption}
           </div>
-          <div className="select__arrow">
-          </div>
+          <div className="select__arrow"></div>
         </div>
 
         <div className="select__options">

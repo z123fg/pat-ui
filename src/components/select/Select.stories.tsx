@@ -1,6 +1,5 @@
 import { action } from '@storybook/addon-actions';
 import React from 'react';
-import Icon from '../Icon';
 import Select from './index';
 import SelectOption from './SelectOption';
 
@@ -12,14 +11,36 @@ export default {
 }
 
 export const DefaultSelect = () => (
-    <div>
-        <Select onChange={action('selected')} placeholder='select a topping'>
-            <SelectOption>Celery</SelectOption>
-            <SelectOption>Cheese</SelectOption>
-            <SelectOption>Onion</SelectOption>
-            <SelectOption>Tomato</SelectOption>
-        </Select>
-    </div>
+  <div>
+    <Select onChange={action('selected')} placeholder="select a topping">
+      <SelectOption>Celery</SelectOption>
+      <SelectOption>Cheese</SelectOption>
+      <SelectOption>Onion</SelectOption>
+      <SelectOption>Tomato</SelectOption>
+    </Select>
+    <br />
+    <Select
+      onChange={action('selected')}
+      placeholder="select a topping"
+      color="secondary"
+    >
+      <SelectOption>Celery</SelectOption>
+      <SelectOption>Cheese</SelectOption>
+      <SelectOption>Onion</SelectOption>
+      <SelectOption>Tomato</SelectOption>
+    </Select>
+    <br />
+    <Select
+      onChange={action('selected')}
+      placeholder="select a topping"
+      color="error"
+    >
+      <SelectOption>Celery</SelectOption>
+      <SelectOption>Cheese</SelectOption>
+      <SelectOption>Onion</SelectOption>
+      <SelectOption>Tomato</SelectOption>
+    </Select>
+  </div>
 );
 
 export const DisabledSelect = () => (

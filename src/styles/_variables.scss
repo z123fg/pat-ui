@@ -148,7 +148,7 @@ $enable-pointer-cursor-for-buttons: true !default;
 
 // border
 
-$border-width: 1px !default;
+$border-width: 2px !default;
 $border-color: $gray-300 !default;
 
 $border-radius: 0.25rem !default;
@@ -311,10 +311,12 @@ $select-transition: all 0.4s !default;
 // select border
 $select-border-width: $border-width !default;
 $select-border-radius: 0.28571429rem !default;
-$select-onopen-color: #0d1cee;
+$select-onopen-color: rgb(24, 106, 202);
 
 // select placeholder
 $select-label-color:#706f6f;
 
-// select arrow
-// $select-arrow-color: #3b3b3b;
+//select border color
+$select-border-primary:rgba(34, 36, 38, 0.15);
+$select-border-secondary:rgb(24, 106, 202);
+$select-border-error:rgb(247, 6, 6);

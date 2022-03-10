@@ -1,20 +1,3 @@
-.select__option {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  padding: $select-padding-y $select-padding-x;
-
-  font-family: $select-font-family;
-  font-size: $select-font-size;
-  font-weight: $select-font-weight;
-  line-height: $select-line-height;
-  color: $select-font-color;
-  text-align: center;
-
-  cursor: pointer;
-  transition: $select-transition;
-}
-
 .select__wrapper {
   position: relative;
   user-select: none;
@@ -23,6 +6,7 @@
 }
 
 .select {
+  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -31,10 +15,27 @@
   outline: none;
 }
 
+.label__ontop {
+  position: absolute;
+  bottom: 60px;
+  left: 10px;
+  z-index: 1;
+  color: $select-border-secondary;
+  background-color: white;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.label__hidden {
+  visibility: hidden;
+}
+
 .select__active_option__inner {
   display: flex;
   flex-direction: row;
+  align-items: center;
   color: $select-label-color;
+  height: 56px;
 }
 
 .select__active_option {
@@ -43,8 +44,7 @@
   align-items: center;
   justify-content: space-between;
 
-  //   @include select-border-style($border-width, rgba(34, 36, 38, 0.15));
-  @include select-border-style(1px, rgba(34, 36, 38, 0.15));
+  @include select-border-style($border-width, rgba(34, 36, 38, 0.15));
 
   border-radius: $select-border-radius;
 
@@ -66,6 +66,20 @@
   }
 }
 
+.select__active_option {
+  &.select__active_option--primary {
+    @include select-border-style($border-width, $select-border-primary);
+  }
+
+  &.select__active_option--secondary {
+    @include select-border-style($border-width, $select-border-secondary);
+  }
+
+  &.select__active_option--error {
+    @include select-border-style($border-width, $select-border-error);
+  }
+}
+
 .select__active_option:hover {
   @include select-border-style($border-width, rgba(34, 36, 38, 0.5));
 }
@@ -78,14 +92,17 @@
   left: 0;
   right: 0;
 
-  @include select-options-border($select-border-width, $select-onopen-color);
+  box-shadow: 0px 5px 5px -3px rgba(37, 37, 37, 0.2),
+    0px 8px 10px 1px rgba(37, 37, 37, 0.2),
+    0px 3px 14px 2px rgba(37, 37, 37, 0.2);
+
+  // @include select-options-border($select-border-width, $black);
   @include select-border-radius-style(
     0,
     0,
     $select-border-radius,
     $select-border-radius
   );
-
   background: $white;
   opacity: 0;
   visibility: hidden;
@@ -100,12 +117,11 @@
   height: 10px;
   width: 10px;
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M311.9 335.1l-132.4 136.8C174.1 477.3 167.1 480 160 480c-7.055 0-14.12-2.702-19.47-8.109l-132.4-136.8C-9.229 317.8 3.055 288 27.66 288h264.7C316.9 288 329.2 317.8 311.9 335.1z"/></svg>');
-
 }
 
 .select__arrow ::before,
 .select__arrow ::after {
-//   content: '';
+  //   content: '';
   position: absolute;
   bottom: 5px;
   width: 0.05rem;
@@ -129,32 +145,48 @@
 // styling on open
 .select.open {
   .select__active_option {
-    /* clear out radius */
     @include select-border-radius-style(
       $select-border-radius,
       $select-border-radius,
-      0,
-      0
+      $select-border-radius,
+      $select-border-radius
     );
 
     /* change border color */
     border-left: $select-border-width solid $select-onopen-color;
     border-right: $select-border-width solid $select-onopen-color;
     border-top: $select-border-width solid $select-onopen-color;
-    border-bottom: $select-border-width solid rgba(34, 36, 38, 0.15);
+    border-bottom: $select-border-width solid $select-onopen-color;
   }
 
   .select__active_option:hover {
     border-left: $select-border-width solid $select-onopen-color;
     border-right: $select-border-width solid $select-onopen-color;
     border-top: $select-border-width solid $select-onopen-color;
-    border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+    border-bottom: $select-border-width solid $select-onopen-color;
   }
 
   .select__options {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
+  }
+
+  .select__option {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding: $select-padding-y $select-padding-x;
+
+    font-family: $select-font-family;
+    font-size: $select-font-size;
+    font-weight: $select-font-weight;
+    line-height: $select-line-height;
+    color: $select-font-color;
+    text-align: center;
+
+    cursor: pointer;
+    transition: $select-transition;
   }
 
   .select__option:hover {
