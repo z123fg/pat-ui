@@ -1,13 +1,21 @@
+<<<<<<< HEAD
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 import Select from './index';
 import SelectOption from './SelectOption';
+=======
+import React from 'react';
+import { action } from '@storybook/addon-actions';
+import Select from './index';
+// import Icon from '../Icon';
+>>>>>>> bc74b747d85f4d07759b2547c7bd94dda0ea61d3
 
 export default {
   title: 'Select',
   component: Select,
 };
 
+<<<<<<< HEAD
 export const StandardSelect = () => (
   <div>
     <Select
@@ -200,3 +208,15 @@ export const SelectWithActive = () => (
     </Select>
   </div>
 );
+=======
+export const DefaultSelect = () => (
+  <div>
+    <Select onChange={action('selected')} placeholder="select a framework">
+      {/* <Dropdown.Option value="spark">Spark</Dropdown.Option>
+      <Dropdown.Option value="kafka">Kafka</Dropdown.Option>
+      <Dropdown.Option value="flink">Flink</Dropdown.Option>
+      <Dropdown.Option value="storm">Storm</Dropdown.Option> */}
+    </Select>
+  </div>
+);
+>>>>>>> bc74b747d85f4d07759b2547c7bd94dda0ea61d3
