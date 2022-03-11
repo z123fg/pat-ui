@@ -26,6 +26,12 @@
   padding-right: 3px;
 }
 
+// .label__ontop {
+//   &.select__active_option--error {
+//     color: $select-border-error;
+//   }
+// }
+
 .label__hidden {
   visibility: hidden;
 }
@@ -33,7 +39,7 @@
 .select__active_option__inner {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
   color: $select-label-color;
   height: 56px;
 }
@@ -44,9 +50,13 @@
   align-items: center;
   justify-content: space-between;
 
-  @include select-border-style($border-width, rgba(34, 36, 38, 0.15));
+  &.select__active_option--standard {
+    padding-left: 0;
+  }
 
-  border-radius: $select-border-radius;
+  @include select-border-style($border-width, rgba(34, 36, 38, 0.15), bottom);
+
+  border-radius: $border-radius;
 
   padding: $select-padding-y $select-padding-x;
 
@@ -57,6 +67,10 @@
   color: $select-font-color;
   background: $white;
 
+  &.select__active_option--filled {
+    background-color: rgba(34, 36, 38, 0.099);
+  }
+
   cursor: pointer;
 
   &.disabled {
@@ -66,22 +80,45 @@
   }
 }
 
-.select__active_option {
+.select__active_option--standard,
+.select__active_option--filled {
+  @include select-border-style($border-width, rgba(34, 36, 38, 0.15), bottom);
+
   &.select__active_option--primary {
-    @include select-border-style($border-width, $select-border-primary);
+    @include select-border-style($border-width, $select-border-primary, bottom);
   }
-
   &.select__active_option--secondary {
-    @include select-border-style($border-width, $select-border-secondary);
+    @include select-border-style(
+      $border-width,
+      $select-border-secondary,
+      bottom
+    );
   }
-
   &.select__active_option--error {
-    @include select-border-style($border-width, $select-border-error);
+    @include select-border-style($border-width, $select-border-error, bottom);
+  }
+}
+
+.select__active_option--outlined {
+  @include select-border-style($border-width, rgba(34, 36, 38, 0.15), all);
+  &.select__active_option--primary {
+    @include select-border-style($border-width, $select-border-primary, all);
+  }
+  &.select__active_option--secondary {
+    @include select-border-style($border-width, $select-border-secondary, all);
+  }
+  &.select__active_option--error {
+    @include select-border-style($border-width, $select-border-error, all);
   }
 }
 
 .select__active_option:hover {
-  @include select-border-style($border-width, rgba(34, 36, 38, 0.5));
+  @include select-border-style($border-width, rgba(34, 36, 38, 0.5), all);
+}
+
+.select__active_option--standard:hover,
+.select__active_option--filled:hover {
+  @include select-border-style($border-width, rgba(34, 36, 38, 0.5), bottom);
 }
 
 .select__options {
@@ -114,49 +151,62 @@
 
 .select__arrow {
   position: relative;
-  height: 10px;
-  width: 10px;
+  height: 20px;
+  width: 20px;
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M311.9 335.1l-132.4 136.8C174.1 477.3 167.1 480 160 480c-7.055 0-14.12-2.702-19.47-8.109l-132.4-136.8C-9.229 317.8 3.055 288 27.66 288h264.7C316.9 288 329.2 317.8 311.9 335.1z"/></svg>');
 }
 
-.select__arrow ::before,
-.select__arrow ::after {
-  //   content: '';
-  position: absolute;
-  bottom: 5px;
-  width: 0.05rem;
-  height: 100%;
-  transition: $select-transition;
-}
-.select__arrow ::after {
+// .select__arrow ::before,
+// .select__arrow ::after {
+//   //   content: '';
+//   position: absolute;
+//   bottom: 5px;
+//   width: 0.05rem;
+//   height: 100%;
+//   transition: $select-transition;
+// }
+// .select__arrow ::before{
+//   //   content: '';
+//   position: absolute;
+//   bottom: 5px;
+//   width: 0.05rem;
+//   height: 100%;
+//   transition: $select-transition;
+// }
+.select__arrow ::before {
   background-image: url('data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224z"/></svg>');
 }
 
-.select__arrow ::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M311.9 335.1l-132.4 136.8C174.1 477.3 167.1 480 160 480c-7.055 0-14.12-2.702-19.47-8.109l-132.4-136.8C-9.229 317.8 3.055 288 27.66 288h264.7C316.9 288 329.2 317.8 311.9 335.1z"/></svg>');
-}
-
-// .select__arrow ::after {
-//   left: 5px;
-//   transform: rotate(45deg);
-//   background-color: $select-arrow-color;
+// .select__arrow ::before {
+//   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M311.9 335.1l-132.4 136.8C174.1 477.3 167.1 480 160 480c-7.055 0-14.12-2.702-19.47-8.109l-132.4-136.8C-9.229 317.8 3.055 288 27.66 288h264.7C316.9 288 329.2 317.8 311.9 335.1z"/></svg>');
 // }
 
 // styling on open
 .select.open {
   .select__active_option {
-    @include select-border-radius-style(
-      $select-border-radius,
-      $select-border-radius,
-      $select-border-radius,
-      $select-border-radius
-    );
+    &.select__active_option--outlined {
+      @include select-border-radius-style(
+        $select-border-radius,
+        $select-border-radius,
+        $select-border-radius,
+        $select-border-radius
+      );
 
-    /* change border color */
-    border-left: $select-border-width solid $select-onopen-color;
-    border-right: $select-border-width solid $select-onopen-color;
-    border-top: $select-border-width solid $select-onopen-color;
-    border-bottom: $select-border-width solid $select-onopen-color;
+      border-left: $select-border-width solid $select-onopen-color;
+      border-right: $select-border-width solid $select-onopen-color;
+      border-top: $select-border-width solid $select-onopen-color;
+      border-bottom: $select-border-width solid $select-onopen-color;
+
+      /* change border color */
+    }
+  }
+  .select__active_option {
+    &.select__active_option--standard {
+      @include select-border-style($border-width, $select-onopen-color, bottom);
+    }
+    &.select__active_option--filled {
+      @include select-border-style($border-width, $select-onopen-color, bottom);
+    }
   }
 
   .select__active_option:hover {
@@ -191,7 +241,7 @@
 
   .select__option:hover {
     cursor: pointer;
-    background-color: rgba(34, 36, 38, 0.03);
+    background-color: rgb(239, 244, 251);
   }
 
   //   .arrow::before {

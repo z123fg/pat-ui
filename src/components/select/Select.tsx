@@ -11,14 +11,16 @@ import { ISelectOptionProps } from './SelectOption';
 
 export type selectColor = 'primary' | 'secondary' | 'error';
 
-// export type selectType = 'standard' | '' 
+// export type selectType = 'standard' | 'outline' | 'filled';
+export type selectType = 'standard' | 'outlined' | 'filled';
+
 export interface ISelectProps {
   /** children must be React Element */
   children?:
     | ReactElement<ISelectOptionProps>
     | ReactElement<ISelectOptionProps>[];
   /** set customized css class */
-  className?: string;
+  className?: selectType;
   /** set select to be disabled */
   disabled?: boolean;
   /** set customized css style */
@@ -29,6 +31,8 @@ export interface ISelectProps {
   onChange?: (val: any) => void;
   /** set the color of select */
   color?: selectColor;
+  /** set the type of select */
+  type?: selectType;
 }
 
 //A Select allows user to select from multiple options.
@@ -60,7 +64,7 @@ const Select: FC<ISelectProps> = (props) => {
 
   const closeOptionList = () => {
     if (isOptionListOpen) {
-      setisOptionListOpen(false);
+      setisOptionListOpen(!isOptionListOpen);
     }
   };
 
@@ -93,13 +97,27 @@ const Select: FC<ISelectProps> = (props) => {
       return 'label__hidden';
     }
   }
+  const getTypeClass = (className: selectType | undefined) => {
+    switch (className) {
+      case 'standard':
+        return 'select__active_option--standard';
+      case 'outlined':
+        return 'select__active_option--outlined';
+      case 'filled':
+        return 'select__active_option--filled';
+      default:
+        return 'select__active_option';
+    }
+  }
 
   return (
     <div
       className={className ? `select__wrapper ${className}` : 'select__wrapper'}
       style={style}
     >
-      <span className={`${getLabelClass(isOptionListOpen)}`}>{placeholder}</span>
+      <span className={`${getLabelClass(isOptionListOpen)}`}>
+        {placeholder}
+      </span>
       <div
         className={isOptionListOpen ? 'select open' : 'select'}
         onClick={(e) => (disabled ? e.preventDefault() : toggleOptionList())}
@@ -112,7 +130,7 @@ const Select: FC<ISelectProps> = (props) => {
               disabled
                 ? 'select__active_option disabled'
                 : 'select__active_option'
-            } ${getColorClass(color)}
+            } ${getColorClass(color)} ${getTypeClass(className)}
           `}
         >
           <div className="select__active_option__inner">

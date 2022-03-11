@@ -28,8 +28,13 @@
   }
 }
 
-
-@mixin message-style($msg-background-color, $msg-border-radius, $msg-border, $msg-padding, $msg-box-width) {
+@mixin message-style(
+  $msg-background-color,
+  $msg-border-radius,
+  $msg-border,
+  $msg-padding,
+  $msg-box-width
+) {
   background-color: $msg-background-color;
   border-radius: $msg-border-radius;
   border: $msg-border;
@@ -75,9 +80,21 @@
   border-color: $border-color;
 }
 
-@mixin select-border-style($border-width, $border-color) {
+@mixin select-border-style($border-width, $border-color, $direction) {
+  @if($direction == bottom){
+    border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: $border-width solid $border-color;
+  border-radius: 0%;
+
+  }@else{
   border: $border-width solid $border-color;
+  }
 }
+// @mixin select-standard-border-style($border-width, $border-color) {
+  
+// }
 
 @mixin select-options-border($border-width, $border-color) {
   border-top: 0;
