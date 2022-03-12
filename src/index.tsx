@@ -5,12 +5,8 @@ export { default as Message } from './components/Message';
 export { default as Card } from './components/Card';
 export { default as Dropdown } from './components/Dropdown';
 export { default as Progress } from './components/Progress';
-<<<<<<< HEAD
 export { default as Select } from './components/Select/';
 
 
 
 
-=======
-export {default as Select} from './components/Select';
->>>>>>> bc74b747d85f4d07759b2547c7bd94dda0ea61d3

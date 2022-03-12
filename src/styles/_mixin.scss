@@ -80,7 +80,6 @@
   border-color: $border-color;
 }
 
-<<<<<<< HEAD
 @mixin select-border-style($border-width, $border-color, $direction) {
   @if($direction == bottom){
     border-top: none;
@@ -102,12 +101,6 @@
   border-bottom: $border-width solid $border-color;
   border-left: $border-width solid $border-color;
   border-right: $border-width solid $border-color;
-=======
-
-/////
-@mixin select-border-style($border-width, $border-color) {
-  border: $border-width solid $border-color;
->>>>>>> bc74b747d85f4d07759b2547c7bd94dda0ea61d3
 }
 
 @mixin select-border-radius-style(
@@ -121,13 +114,3 @@
   border-bottom-left-radius: $border-bottom-left-radius;
   border-bottom-right-radius: $border-bottom-right-radius;
 }
-<<<<<<< HEAD
-=======
-
-@mixin select-options-border($border-width, $border-color) {
-  border-top: 0;
-  border-bottom: $border-width solid $border-color;
-  border-left: $border-width solid $border-color;
-  border-right: $border-width solid $border-color;
-}
->>>>>>> bc74b747d85f4d07759b2547c7bd94dda0ea61d3
