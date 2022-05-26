@@ -8,7 +8,7 @@ export default function App() {
     };
     return (
         <div className="App">
-            1
+            2
             <Pagination count={20} page={10} siblingCount={1} onChangePage={handleOnChange} />
         </div>
     );
