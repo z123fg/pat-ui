@@ -1,24 +1,54 @@
-version: 2.1
-orbs:
-  node: circleci/node@5.0.2
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check {{ '/2.0/language-javascript/' | docs_url }} for more details
+#
+version: 2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:8.9.1
+
 jobs:
-  install-node-example:
-    docker:
-      - image: 'cimg/base:stable'
+  test:
+    <<: *defaults
     steps:
       - checkout
-      - node/install:
-          install-yarn: false
-          node-version: '14'
-      - run: node --version
-      - node/install-packages:
-          pkg-manager: npm
-      
+
+      - run: npm install
       - run:
-          command: npm run test
           name: Run tests
+          command: npm test
+
+
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: npm publish
+
 workflows:
-  test_my_app:
+  version: 2
+  test-deploy:
     jobs:
-      - install-node-example
-      
+      - test:
+          filters:
+            tags:
+              only: /^v.*/
+      - deploy:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
